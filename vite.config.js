@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  base: './', // 使用相对路径，支持直接打开 HTML 文件
+  base: '/front/', // GitHub Pages 子路径部署
   plugins: [vue()],
   resolve: {
     alias: {
