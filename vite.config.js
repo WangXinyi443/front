@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+  base: './', // 使用相对路径，支持直接打开 HTML 文件
   plugins: [vue()],
   resolve: {
     alias: {
@@ -17,6 +18,11 @@ export default defineConfig({
     open: true,
     host: '0.0.0.0', // 允许局域网访问
     strictPort: false
+  },
+  preview: {
+    port: 4173,
+    host: '0.0.0.0', // 允许局域网访问
+    open: true
   },
   build: {
     outDir: 'dist',
