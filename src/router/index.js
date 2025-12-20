@@ -23,7 +23,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/front/'), // 匹配 vite.config.js 中的 base
   routes
 })
 
