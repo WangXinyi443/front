@@ -1,0 +1,21 @@
+{
+  "name": "youth-ripples",
+  "version": "1.0.0",
+  "description": "全媒体H5作品《青年涟漪：故乡行动者》",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "echarts": "^6.0.0",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "path": "^0.12.7",
+    "vite": "^5.0.0"
+  }
+}

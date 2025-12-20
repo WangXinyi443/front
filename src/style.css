@@ -1,0 +1,76 @@
+:root {
+  --color-primary: #E6A048; /* 暖黄 - 主色调 */
+  --color-secondary: #5B8C5A; /* 绿 - 希望、乡村 */
+  --color-accent: #4A7B9D; /* 蓝 - 信任、宁静 */
+  --color-background: #F9F5F0; /* 米白背景 */
+  --color-text: #333333; /* 正文黑色 */
+  --color-text-light: #666666; /* 辅助灰色 */
+  --font-family-sans: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-family-serif: 'Noto Serif SC', serif;
+  --spacing-unit: 8px;
+  --border-radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* 响应式断点 */
+@media (min-width: 768px) {
+  /* 平板样式 */
+}
+
+@media (min-width: 1024px) {
+  /* 桌面样式 */
+}
+
+@media (min-width: 1440px) {
+  /* 大屏样式 */
+}
+
+/* 通用工具类 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+}
+
