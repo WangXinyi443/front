@@ -26,6 +26,8 @@
               :src="story.coverImage" 
               :alt="story.name"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
               @error="handleImageError"
             />
           </div>
@@ -248,6 +250,26 @@ const handleImageLoad = (e) => {
 onMounted(() => {
   // 页面加载时滚动到顶部
   window.scrollTo({ top: 0, behavior: 'auto' })
+  
+  // 预加载当前故事的图片
+  if (story.value) {
+    import('../utils/imagePreload.js').then(({ addPreloadLink, preloadImages }) => {
+      // 预加载封面图
+      addPreloadLink(story.value.coverImage, 'image')
+      
+      // 预加载章节图片（后台）
+      const sectionImages = story.value.sections
+        .filter(s => s.image)
+        .map(s => s.image)
+      
+      const galleryImages = story.value.sections
+        .filter(s => s.type === 'gallery')
+        .flatMap(s => s.media.filter(m => m.type === 'image').map(m => m.src))
+      
+      const allImages = [...sectionImages, ...galleryImages]
+      preloadImages(allImages)
+    })
+  }
   
   // 滚动动画观察器
   const observerOptions = {

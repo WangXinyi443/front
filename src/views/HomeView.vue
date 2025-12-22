@@ -51,6 +51,8 @@
                 :alt="story.name" 
                 class="card-image"
                 loading="eager"
+                :fetchpriority="index < 2 ? 'high' : 'auto'"
+                decoding="async"
                 @error="handleImageError"
               />
               <div class="card-overlay">
@@ -111,6 +113,17 @@ const isPlaying = ref(false)
 onMounted(() => {
   // 初始化BGM（不自动播放）
   initBGM()
+  
+  // 预加载关键图片（首页卡片图片）
+  import('../utils/imagePreload.js').then(({ preloadImages, addPreloadLink }) => {
+    // 预加载前两张卡片图片
+    const criticalImages = stories.slice(0, 2).map(s => s.coverImage)
+    criticalImages.forEach(src => addPreloadLink(src, 'image'))
+    
+    // 预加载所有卡片图片（后台加载）
+    const allImages = stories.map(s => s.coverImage)
+    preloadImages(allImages)
+  })
   
   // 滚动动画
   const observerOptions = {
