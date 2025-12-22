@@ -23,7 +23,7 @@
           @click="goToStory(story.id)"
         >
           <div class="portrait-image">
-            <img :src="story.coverImage" :alt="story.name" />
+            <img :src="story.coverImage" :alt="story.name" loading="lazy" />
           </div>
           <div class="portrait-info">
             <h3>{{ story.name }}</h3>

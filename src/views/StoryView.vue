@@ -25,8 +25,8 @@
             <img 
               :src="story.coverImage" 
               :alt="story.name"
+              loading="eager"
               @error="handleImageError"
-              @load="handleImageLoad"
             />
           </div>
         </div>
@@ -49,9 +49,9 @@
           <div class="image-content">
             <img 
               :src="section.image" 
-              :alt="section.title" 
+              :alt="section.title"
+              loading="lazy"
               @error="handleImageError"
-              @load="handleImageLoad"
             />
           </div>
         </div>
@@ -71,8 +71,8 @@
                   <img 
                     :src="item.src" 
                     :alt="item.caption"
+                    loading="lazy"
                     @error="handleImageError"
-                    @load="handleImageLoad"
                   />
                   <div class="media-caption">{{ item.caption }}</div>
                 </div>
@@ -108,8 +108,8 @@
               :key="idx"
               :src="img" 
               alt="影响展示"
+              loading="lazy"
               @error="handleImageError"
-              @load="handleImageLoad"
             />
           </div>
         </div>

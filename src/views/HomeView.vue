@@ -40,7 +40,7 @@
         
         <div class="stories-grid">
           <div 
-            v-for="story in stories" 
+            v-for="(story, index) in stories" 
             :key="story.id"
             class="story-card"
             @click="goToStory(story.id)"
@@ -50,8 +50,8 @@
                 :src="story.coverImage" 
                 :alt="story.name" 
                 class="card-image"
+                loading="eager"
                 @error="handleImageError"
-                @load="handleImageLoad"
               />
               <div class="card-overlay">
                 <div class="card-badge">{{ story.tag || story.title }}</div>
