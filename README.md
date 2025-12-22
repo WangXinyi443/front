@@ -72,7 +72,47 @@ npm run preview
 
 ## 部署指南
 
-### 方式一：Vercel（推荐）
+### 方式一：Cloudflare Pages（⭐ 推荐，图片加载最快）
+
+**为什么选择 Cloudflare Pages？**
+- 🚀 **全球 CDN 加速**：300+ 数据中心，中国用户访问速度快 60-90%
+- ⚡ **智能缓存**：图片缓存在边缘节点，第二次访问几乎瞬间加载
+- 💰 **完全免费**：无限带宽、无限构建、无限项目
+- 🔒 **自动 HTTPS**：SSL 证书自动配置
+- 📱 **预览部署**：每个 PR 自动创建预览链接
+
+**快速部署步骤：**
+
+1. **修改配置**（仅首次需要）
+   ```bash
+   # 将 vite.config.js 中的 base 改为 '/'
+   # base: '/'  # Cloudflare Pages 使用根路径
+   ```
+
+2. **注册 Cloudflare**
+   - 访问 https://dash.cloudflare.com/sign-up
+   - 使用邮箱或 GitHub 账号注册
+
+3. **连接 GitHub 仓库**
+   - 登录后，点击 "Workers & Pages" → "Create application" → "Pages"
+   - 点击 "Connect to Git" → "Connect to GitHub"
+   - 授权并选择你的仓库
+
+4. **配置构建设置**
+   ```
+   Framework preset: Vue
+   Build command: npm run build
+   Build output directory: dist
+   ```
+
+5. **部署**
+   - 点击 "Save and Deploy"
+   - 等待 1-3 分钟，部署完成
+   - 获取链接：`https://your-project.pages.dev`
+
+**详细文档：** 查看 [CLOUDFLARE_DEPLOY.md](./CLOUDFLARE_DEPLOY.md)
+
+### 方式二：Vercel（简单快速）
 
 1. **将代码推送到 GitHub**
    ```bash
@@ -96,7 +136,7 @@ npm run preview
    - 这个链接会长期有效，除非你删除项目
    - 每次推送代码到 GitHub，Vercel 会自动重新部署
 
-### 方式二：Netlify
+### 方式三：Netlify
 
 1. 将代码推送到 GitHub（同上）
 2. 访问 [netlify.com](https://netlify.com)
@@ -108,7 +148,7 @@ npm run preview
    - Publish directory: `dist`
 7. 点击 "Deploy site"
 
-### 方式三：GitHub Pages
+### 方式四：GitHub Pages
 
 1. 安装 gh-pages：
    ```bash

@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",
-    "compress-images": "node scripts/compress-images.js"
+    "compress-images": "node scripts/compress-images.js",
+    "switch-cloudflare": "node scripts/switch-to-cloudflare.js"
   },
   "dependencies": {
     "echarts": "^6.0.0",
