@@ -23,8 +23,8 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <h1 class="hero-title">青年涟漪</h1>
-        <p class="hero-subtitle">李富贵的温暖故事</p>
-        <p class="hero-description">一个乡村青年，用理发和送餐两个行动，在社区中激起温暖的涟漪</p>
+        <p class="hero-subtitle">李佳欣女士学习李富贵的温暖故事</p>
+        <p class="hero-description">一个乡村女性，受到李富贵的启发，用理发和做饭两个行动，在社区中激起温暖的涟漪</p>
       </div>
       <div class="scroll-hint">
         <span>向下探索</span>
@@ -93,6 +93,17 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { stories } from '../data/stories.js'
 
+// 获取资源路径（支持 GitHub Pages 子路径部署）
+function getAssetPath(path) {
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path
+  }
+  const base = import.meta.env.BASE_URL || '/'
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path
+  const fullPath = base + cleanPath
+  return fullPath.replace(/([^:]\/)\/+/g, '$1')
+}
+
 const router = useRouter()
 const bgmAudio = ref(null)
 const isPlaying = ref(false)
@@ -137,7 +148,7 @@ const initBGM = () => {
   }
   
   // 使用本地音频文件
-  const audio = new Audio('/videos/lifugui/zm.mp3')
+  const audio = new Audio(getAssetPath('/videos/lifugui/zm.mp3'))
   audio.loop = true
   audio.volume = 0.3
   audio.preload = 'auto'

@@ -9,12 +9,12 @@
     <!-- 标题区域 -->
     <header class="about-header">
       <h1 class="main-title">从涟漪到浪潮</h1>
-      <p class="subtitle">李富贵的两个温暖行动，在社区中激起温暖的涟漪</p>
+      <p class="subtitle">李佳欣女士学习李富贵的两个温暖行动，在社区中激起温暖的涟漪</p>
     </header>
 
     <!-- 青年群像墙 -->
     <section class="portrait-wall">
-      <h2 class="section-title">李富贵的两个故事</h2>
+      <h2 class="section-title">李佳欣女士的两个故事</h2>
       <div class="portrait-grid">
         <div 
           v-for="story in stories" 
