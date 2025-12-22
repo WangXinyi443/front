@@ -35,7 +35,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: front-6ew
+          projectName: front
           directory: dist
           # 可选：Git 提交信息
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
