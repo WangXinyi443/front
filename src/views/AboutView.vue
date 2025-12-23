@@ -162,14 +162,14 @@ let serviceChart = null
 const comments = ref([
   {
     name: '热心网友',
-    time: '2024-12-20 10:30',
+    time: '2025-11-14 10:30',
     content: '这些青年的故事真的很感人，他们用实际行动诠释了什么是责任和担当！',
     likes: 12,
     liked: false
   },
   {
     name: '社区志愿者',
-    time: '2024-12-20 14:20',
+    time: '2025-11-16 14:20',
     content: '看完这些故事，我也想为社区做点什么。每个人都可以成为改变的力量！',
     likes: 8,
     liked: false
