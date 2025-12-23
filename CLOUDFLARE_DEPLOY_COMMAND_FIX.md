@@ -71,3 +71,4 @@ GitHub Actions 会自动：
 **长期方案：**
 使用 GitHub Actions 自动部署，这样就不需要配置 Deploy command 了。
 
+
