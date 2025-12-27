@@ -6,6 +6,15 @@
         <button class="back-btn" @click="goHome">← 返回地图</button>
         <h1 class="story-title">{{ story.name }}</h1>
         <p class="story-subtitle">{{ story.title }}</p>
+        <!-- 收藏和分享按钮 -->
+        <div class="header-actions">
+          <FavoriteButton :story-id="story.id" />
+          <ShareButton 
+            :title="story.name" 
+            :desc="story.title"
+            :img-url="story.coverImage"
+          />
+        </div>
         <div class="scroll-indicator">
           <span>向下滚动</span>
           <div class="arrow-down">↓</div>
@@ -146,20 +155,17 @@
       <button class="nav-btn" @click="goToAbout">查看所有故事</button>
     </nav>
 
-    <!-- 媒体查看器模态框 -->
-    <div v-if="selectedMedia" class="media-viewer" @click="closeMediaViewer">
-      <div class="viewer-content" @click.stop>
-        <button class="close-btn" @click="closeMediaViewer">×</button>
-        <img v-if="selectedMedia.type === 'image'" :src="selectedMedia.src" :alt="selectedMedia.caption" />
-        <video 
-          v-else-if="selectedMedia.type === 'video'"
-          :src="selectedMedia.src" 
-          controls
-          autoplay
-        ></video>
-        <p class="viewer-caption">{{ selectedMedia.caption }}</p>
-      </div>
-    </div>
+    <!-- 媒体查看器 -->
+    <MediaViewer
+      :visible="showMediaViewer"
+      :media-list="allMediaList"
+      :initial-index="currentMediaIndex"
+      @update:visible="showMediaViewer = $event"
+      @close="closeMediaViewer"
+    />
+    
+    <!-- 返回顶部按钮 -->
+    <BackToTop />
   </div>
   <div v-else class="loading">
     <p>加载中...</p>
@@ -170,10 +176,15 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { stories } from '../data/stories.js'
+import FavoriteButton from '../components/FavoriteButton.vue'
+import ShareButton from '../components/ShareButton.vue'
+import MediaViewer from '../components/MediaViewer.vue'
+import BackToTop from '../components/BackToTop.vue'
 
 const router = useRouter()
 const route = useRoute()
-const selectedMedia = ref(null)
+const showMediaViewer = ref(false)
+const currentMediaIndex = ref(0)
 
 // 使用computed使storyId响应路由变化
 const storyId = computed(() => {
@@ -221,12 +232,33 @@ watch(() => route.params.id, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
 
+// 收集所有媒体（用于查看器滑动）
+const allMediaList = computed(() => {
+  if (!story.value) return []
+  const mediaList = []
+  story.value.sections.forEach(section => {
+    if (section.type === 'gallery' && section.media) {
+      section.media.forEach(item => {
+        if (item.type === 'image') {
+          mediaList.push(item)
+        }
+      })
+    }
+  })
+  return mediaList
+})
+
 const openMediaViewer = (media) => {
-  selectedMedia.value = media
+  // 找到当前媒体在列表中的索引
+  const index = allMediaList.value.findIndex(m => 
+    m.src === media.src || (m.caption === media.caption && m.type === media.type)
+  )
+  currentMediaIndex.value = index >= 0 ? index : 0
+  showMediaViewer.value = true
 }
 
 const closeMediaViewer = () => {
-  selectedMedia.value = null
+  showMediaViewer.value = false
 }
 
 const handleImageError = (e) => {
@@ -608,53 +640,6 @@ onMounted(() => {
   transform: translateY(-2px);
 }
 
-.media-viewer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-}
-
-.viewer-content {
-  max-width: 90%;
-  max-height: 90%;
-  position: relative;
-}
-
-.viewer-content img,
-.viewer-content video {
-  max-width: 100%;
-  max-height: 80vh;
-  border-radius: var(--border-radius);
-}
-
-.close-btn {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  background: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--color-text);
-}
-
-.viewer-caption {
-  color: white;
-  text-align: center;
-  margin-top: 20px;
-  font-size: 16px;
-}
 
 .loading {
   min-height: 100vh;

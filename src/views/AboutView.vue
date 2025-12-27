@@ -140,6 +140,9 @@
         </div>
       </div>
     </section>
+    
+    <!-- 返回顶部按钮 -->
+    <BackToTop />
   </div>
 </template>
 
@@ -148,6 +151,7 @@ import { ref, computed, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { stories } from '../data/stories.js'
 import * as echarts from 'echarts'
+import BackToTop from '../components/BackToTop.vue'
 
 const router = useRouter()
 const pieChartRef = ref(null)

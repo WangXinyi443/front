@@ -35,8 +35,19 @@
     <!-- 故事卡片区域 -->
     <section class="stories-section">
       <div class="container">
-        <h2 class="section-title">探索故事</h2>
-        <p class="section-subtitle">点击卡片，走进他们的世界</p>
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">探索故事</h2>
+            <p class="section-subtitle">点击卡片，走进他们的世界</p>
+          </div>
+          <button class="favorites-link" @click="showFavoritesModal = true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>我的收藏</span>
+            <span v-if="favoriteCount > 0" class="favorite-badge">{{ favoriteCount }}</span>
+          </button>
+        </div>
         
         <div class="stories-grid">
           <div 
@@ -73,7 +84,14 @@
                   <span class="stat-label">受益老人</span>
                 </div>
               </div>
-              <button class="card-button">查看故事 →</button>
+              <div class="card-actions">
+                <FavoriteButton 
+                  :story-id="story.id" 
+                  @click.stop
+                  @toggle="handleFavoriteToggle"
+                />
+                <button class="card-button" @click.stop="goToStory(story.id)">查看故事 →</button>
+              </div>
             </div>
           </div>
         </div>
@@ -84,16 +102,33 @@
     <footer class="home-footer">
       <div class="footer-content">
         <p class="footer-text">从涟漪到浪潮，每一个青年都是故乡的希望</p>
-        <button class="footer-button" @click="goToAbout">查看所有故事</button>
+        <div class="footer-buttons">
+          <button class="footer-button" @click="goToExplore">探索故事</button>
+          <button class="footer-button" @click="goToAbout">查看所有故事</button>
+        </div>
       </div>
     </footer>
+    
+    <!-- 返回顶部按钮 -->
+    <BackToTop />
+    
+    <!-- 收藏列表弹窗 -->
+    <FavoritesModal 
+      :visible="showFavoritesModal"
+      @update:visible="showFavoritesModal = $event"
+      @close="handleFavoritesModalClose"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { stories } from '../data/stories.js'
+import FavoriteButton from '../components/FavoriteButton.vue'
+import BackToTop from '../components/BackToTop.vue'
+import FavoritesModal from '../components/FavoritesModal.vue'
+import { getFavoriteCount, getFavorites } from '../utils/favorites.js'
 
 // 获取资源路径（支持 GitHub Pages 子路径部署）
 function getAssetPath(path) {
@@ -109,6 +144,19 @@ function getAssetPath(path) {
 const router = useRouter()
 const bgmAudio = ref(null)
 const isPlaying = ref(false)
+const favoriteCount = ref(getFavoriteCount())
+const showFavoritesModal = ref(false)
+
+// 监听收藏变化
+const handleFavoriteToggle = () => {
+  favoriteCount.value = getFavoriteCount()
+}
+
+const handleFavoritesModalClose = () => {
+  showFavoritesModal.value = false
+  // 更新收藏数量
+  favoriteCount.value = getFavoriteCount()
+}
 
 onMounted(() => {
   // 初始化BGM（不自动播放）
@@ -223,6 +271,12 @@ const goToStory = (id) => {
 
 const goToAbout = () => {
   router.push('/about')
+  // 跳转到页面顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const goToExplore = () => {
+  router.push('/explore')
   // 跳转到页面顶部
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
@@ -367,6 +421,15 @@ const handleImageLoad = (e) => {
   margin: 0 auto;
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .section-title {
   font-size: 48px;
   font-weight: bold;
@@ -380,7 +443,51 @@ const handleImageLoad = (e) => {
   font-size: 18px;
   text-align: center;
   color: #666;
-  margin-bottom: 60px;
+  margin-bottom: 0;
+}
+
+.favorites-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.favorites-link:hover {
+  background: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 160, 72, 0.3);
+}
+
+.favorites-link svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.favorite-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .stories-grid {
@@ -507,8 +614,14 @@ const handleImageLoad = (e) => {
   text-transform: uppercase;
 }
 
+.card-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .card-button {
-  width: 100%;
+  flex: 1;
   padding: 14px;
   background: var(--color-primary);
   color: white;
@@ -543,6 +656,13 @@ const handleImageLoad = (e) => {
   font-size: 20px;
   margin-bottom: 30px;
   line-height: 1.6;
+}
+
+.footer-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .footer-button {
@@ -690,6 +810,25 @@ const handleImageLoad = (e) => {
   
   .card-image-wrapper {
     height: 250px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .favorites-link {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .footer-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .footer-button {
+    width: 100%;
   }
 }
 </style>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import StoryView from '../views/StoryView.vue'
 import AboutView from '../views/AboutView.vue'
+import ExploreView from '../views/ExploreView.vue'
 
 const routes = [
   {
@@ -19,11 +20,16 @@ const routes = [
     path: '/about',
     name: 'about',
     component: AboutView
+  },
+  {
+    path: '/explore',
+    name: 'explore',
+    component: ExploreView
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory('/front/'), // 匹配 vite.config.js 中的 base
+  history: createWebHistory(import.meta.env.BASE_URL || '/'),
   routes
 })
 
