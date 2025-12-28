@@ -413,7 +413,8 @@ const handleImageLoad = (e) => {
 /* 故事卡片区域 */
 .stories-section {
   padding: 100px 20px;
-  background: #fafafa;
+  background: transparent;
+  position: relative;
 }
 
 .container {
@@ -498,10 +499,12 @@ const handleImageLoad = (e) => {
 }
 
 .story-card {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   opacity: 0;
@@ -515,7 +518,8 @@ const handleImageLoad = (e) => {
 
 .story-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 16px 48px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .card-image-wrapper {

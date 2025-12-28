@@ -2,13 +2,18 @@
   --color-primary: #E6A048; /* 暖黄 - 主色调 */
   --color-secondary: #5B8C5A; /* 绿 - 希望、乡村 */
   --color-accent: #4A7B9D; /* 蓝 - 信任、宁静 */
-  --color-background: #F9F5F0; /* 米白背景 */
-  --color-text: #333333; /* 正文黑色 */
-  --color-text-light: #666666; /* 辅助灰色 */
+  --color-background: #F5F7FA; /* 高级浅灰蓝背景 */
+  --color-background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); /* 高级渐变背景 */
+  --color-background-light: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%); /* 浅色渐变 */
+  --color-background-dark: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* 深色渐变 */
+  --color-text: #2d3748; /* 深灰文字 */
+  --color-text-light: #718096; /* 辅助灰色 */
+  --color-card-bg: rgba(255, 255, 255, 0.95); /* 卡片背景 - 半透明白 */
+  --color-card-shadow: rgba(0, 0, 0, 0.08); /* 卡片阴影 */
   --font-family-sans: 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-family-serif: 'Noto Serif SC', serif;
   --spacing-unit: 8px;
-  --border-radius: 8px;
+  --border-radius: 12px;
 }
 
 * {
@@ -20,14 +25,33 @@
 body {
   font-family: var(--font-family-sans);
   color: var(--color-text);
-  background-color: var(--color-background);
+  background: var(--color-background-light);
+  background-attachment: fixed;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(240, 147, 251, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 #app {
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 /* 响应式断点 */

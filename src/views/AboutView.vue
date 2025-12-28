@@ -537,17 +537,20 @@ onMounted(() => {
 }
 
 .portrait-card {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .portrait-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 48px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .portrait-image {
@@ -591,10 +594,12 @@ onMounted(() => {
 .stats-board {
   max-width: 1200px;
   margin: 0 auto 80px;
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   padding: 60px 40px;
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .charts-container {
@@ -605,10 +610,12 @@ onMounted(() => {
 }
 
 .chart-wrapper {
-  background: var(--color-background);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
   padding: 20px;
   border-radius: var(--border-radius);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .chart-title {
@@ -646,9 +653,11 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto 80px;
   padding: 60px 40px;
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .team-content {
@@ -671,9 +680,12 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto 80px;
   padding: 80px 40px;
-  background: linear-gradient(135deg, var(--color-background) 0%, #F0E8D8 100%);
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
   text-align: center;
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .cta-content h2 {
@@ -704,9 +716,11 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 40px;
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .comments-container {

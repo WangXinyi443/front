@@ -288,8 +288,9 @@ onMounted(() => {
 <style scoped>
 .explore-view {
   min-height: 100vh;
-  background: #fafafa;
+  background: transparent;
   padding-bottom: 60px;
+  position: relative;
 }
 
 .back-button {
@@ -352,10 +353,12 @@ onMounted(() => {
 }
 
 .search-container {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .search-box {
@@ -498,17 +501,20 @@ onMounted(() => {
 }
 
 .story-card {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .story-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 16px 48px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .card-image-wrapper {
@@ -667,10 +673,12 @@ onMounted(() => {
 }
 
 .timeline-card {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -683,7 +691,8 @@ onMounted(() => {
 
 .timeline-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 16px 48px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .timeline-image {
@@ -749,17 +758,20 @@ onMounted(() => {
 }
 
 .stat-card {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 30px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 16px 48px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .stat-icon {
@@ -901,4 +913,5 @@ onMounted(() => {
   }
 }
 </style>
+
 

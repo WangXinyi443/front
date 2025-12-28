@@ -325,7 +325,8 @@ onMounted(() => {
 <style scoped>
 .story-view {
   min-height: 100vh;
-  background: var(--color-background);
+  background: transparent;
+  position: relative;
 }
 
 .story-header {
@@ -408,6 +409,12 @@ onMounted(() => {
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 40px;
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .intro-text {
@@ -437,6 +444,13 @@ onMounted(() => {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  margin: 30px 0;
+  padding: 60px 40px;
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .story-section.visible {
@@ -491,9 +505,11 @@ onMounted(() => {
 .video-featured {
   margin: 40px 0;
   padding: 30px;
-  background: var(--color-background);
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .video-title {
@@ -585,8 +601,14 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-background) 0%, #F0E8D8 100%);
+  background: var(--color-card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
   text-align: center;
+  box-shadow: 0 8px 32px var(--color-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin: 30px 0;
+  padding: 60px 40px;
 }
 
 .quote-content {

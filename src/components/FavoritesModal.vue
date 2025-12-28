@@ -145,8 +145,11 @@ const handleClearAll = () => {
 }
 
 .modal-content {
-  background: white;
+  background: var(--color-card-bg);
+  backdrop-filter: blur(20px);
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 800px;
   max-height: 90vh;
@@ -441,4 +444,5 @@ const handleClearAll = () => {
   }
 }
 </style>
+
 
