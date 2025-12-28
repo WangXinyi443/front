@@ -379,6 +379,33 @@ const initCharts = () => {
     // 柱状图：服务数据统计
     if (serviceChartRef.value) {
       serviceChart = echarts.init(serviceChartRef.value)
+      
+      // 生成年份数据（2023到今年）
+      const currentYear = new Date().getFullYear()
+      const years = []
+      
+      // 固定的测试数据：逐年增长趋势
+      const beneficiariesDataMap = {
+        2023: 145,  // 项目初期
+        2024: 312,  // 快速发展期
+        2025: 487   // 持续增长期
+      }
+      
+      const beneficiariesData = []
+      
+      for (let year = 2023; year <= currentYear; year++) {
+        years.push(year.toString())
+        // 使用固定数据，如果年份超出范围则按趋势推算
+        if (beneficiariesDataMap[year]) {
+          beneficiariesData.push(beneficiariesDataMap[year])
+        } else {
+          // 未来年份按增长趋势推算
+          const lastYear = year - 1
+          const lastValue = beneficiariesDataMap[lastYear] || beneficiariesData[beneficiariesData.length - 1]
+          beneficiariesData.push(lastValue + Math.floor(lastValue * 0.3)) // 增长30%
+        }
+      }
+      
       const serviceOption = {
         tooltip: {
           trigger: 'axis',
@@ -386,42 +413,52 @@ const initCharts = () => {
             type: 'shadow'
           },
           formatter: function(params) {
-            let result = params[0].name + '<br/>'
+            let result = params[0].name + '年<br/>'
             params.forEach(function(item) {
-              result += item.seriesName + ': ' + item.value + '<br/>'
+              result += item.seriesName + ': ' + item.value + '人<br/>'
             })
             return result
           }
         },
         legend: {
-          data: ['累计服务量'],
+          data: ['受益人数'],
           top: 10
         },
         grid: {
           left: '3%',
           right: '4%',
-          bottom: '3%',
+          bottom: '15%',  // 增加底部空间，为X轴名称留出位置
           containLabel: true
         },
         xAxis: {
           type: 'category',
-          data: ['累计义剪', '累计餐数', '服务次数', '受益人数', '志愿者参与']
+          data: years,
+          name: '年份',
+          nameLocation: 'middle',
+          nameGap: 50,  // 增加名称与轴的距离
+          nameTextStyle: {
+            fontSize: 14,
+            color: '#666'
+          },
+          axisLabel: {
+            fontSize: 12,
+            margin: 10  // 标签与轴线的距离
+          }
         },
         yAxis: {
           type: 'value',
-          name: '数量'
+          name: '受益人数（人）',
+          nameLocation: 'middle',
+          nameGap: 50,
+          axisLabel: {
+            formatter: '{value}'
+          }
         },
         series: [
           {
-            name: '累计服务量',
+            name: '受益人数',
             type: 'bar',
-            data: [
-              totalHaircuts.value,  // 累计义剪
-              totalMeals.value,     // 累计餐数
-              2500,                  // 服务次数（义剪+做饭的总次数）
-              totalElders.value,     // 受益人数
-              totalVolunteers.value  // 志愿者参与人数
-            ],
+            data: beneficiariesData,
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 { offset: 0, color: '#E6A048' },
@@ -431,22 +468,89 @@ const initCharts = () => {
             label: {
               show: true,
               position: 'top',
-              formatter: '{c}',
-              fontSize: 12
+              formatter: '{c}人',
+              fontSize: 12,
+              color: '#333'
             },
-            barWidth: '50%'
+            barWidth: '50%',
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
           }
         ]
       }
+      
+      // 移动端响应式调整函数
+      const updateServiceChartLayout = () => {
+        const isMobile = window.innerWidth <= 768
+        const mobileOption = {
+          grid: {
+            bottom: isMobile ? '20%' : '15%'  // 移动端需要更多底部空间
+          },
+          xAxis: {
+            nameGap: isMobile ? 60 : 50,
+            nameTextStyle: {
+              fontSize: isMobile ? 12 : 14
+            },
+            axisLabel: {
+              fontSize: isMobile ? 10 : 12,
+              margin: isMobile ? 12 : 10
+            }
+          },
+          yAxis: {
+            nameGap: isMobile ? 40 : 50,
+            nameTextStyle: {
+              fontSize: isMobile ? 12 : 14
+            }
+          }
+        }
+        serviceChart.setOption(mobileOption)
+      }
+      
       serviceChart.setOption(serviceOption)
+      // 初始检查并应用响应式布局
+      updateServiceChartLayout()
     }
 
     // 响应式调整
-    window.addEventListener('resize', () => {
+    const handleChartResize = () => {
+      const isMobile = window.innerWidth <= 768
       pieChart?.resize()
       barChart?.resize()
       serviceChart?.resize()
-    })
+      
+      // 重新应用响应式布局
+      if (serviceChart) {
+        const mobileOption = {
+          grid: {
+            bottom: isMobile ? '20%' : '15%'
+          },
+          xAxis: {
+            nameGap: isMobile ? 60 : 50,
+            nameTextStyle: {
+              fontSize: isMobile ? 12 : 14
+            },
+            axisLabel: {
+              fontSize: isMobile ? 10 : 12,
+              margin: isMobile ? 12 : 10
+            }
+          },
+          yAxis: {
+            nameGap: isMobile ? 40 : 50,
+            nameTextStyle: {
+              fontSize: isMobile ? 12 : 14
+            }
+          }
+        }
+        serviceChart.setOption(mobileOption)
+      }
+    }
+    
+    window.addEventListener('resize', handleChartResize)
   })
 }
 
